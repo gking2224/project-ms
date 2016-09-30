@@ -1,4 +1,4 @@
-package me.gking2224.projectms.jpa;
+package me.gking2224.projectms.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

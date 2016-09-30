@@ -3,8 +3,8 @@ environments {
     env("all") {
         database {
             port = 3306
-            url = {"jdbc:mysql://${project.envProps.database.host}:3306/${project.envProps.database.name}"}
-            rootUrl = {"jdbc:mysql://${project.envProps.database.host}:3306/${project.envProps.database.root.name}"}
+            url = {"jdbc:mysql://${project.envProps.database.host}:${project.envProps.database.port}/${project.envProps.database.name}"}
+            rootUrl = {"jdbc:mysql://${project.envProps.database.host}:${project.envProps.database.port}/${project.envProps.database.root.name}"}
             driver = "com.mysql.jdbc.Driver"
             root {
                 name = "mysql"
@@ -14,7 +14,7 @@ environments {
             hibernate {
                 showSql = "true"
                 formatSql = "true"
-                generateStatistics = "true"
+                generateStatistics = "false"
                 hbm2ddlAuto = "validate"
                 dialect = "org.hibernate.dialect.MySQLInnoDBDialect"
             }
@@ -29,14 +29,20 @@ environments {
                 deleteIndexHtml=false
             }
         }
-        springProfilesDefault = "dev"
     }
     env("local") {
         database {
+            port = 8002
             name = "${project.localDatabaseName}"
             host = "${project.localDatabaseHost}"
             password = "${project.localDatabasePassword}"
             username = "${project.localDatabaseUsername}"
+            hibernate {
+                showSql = "false"
+                formatSql = "false"
+                hbm2ddlAuto = "validate"
+            }
+            connectionPoolSize = 2
         }
         webapp {
             contextPath="/projects-local"
@@ -46,7 +52,6 @@ environments {
             }
             httpPort=8000
         }
-        springProfilesDefault = "dev"
     }
     env( "dev") {
         database {
@@ -88,12 +93,11 @@ environments {
             hibernate {
                 showSql = "false"
                 formatSql = "false"
-                generateStatistics = "true"
             }
             connectionPoolSize = 10
         }
         webapp {
-            contextPath="/projects"
+            contextPath="/projects-prod"
             host="${project.prodWebserverHost}"
             ng {
                 buildDir = "dist-prod"
@@ -102,6 +106,5 @@ environments {
             }
             httpPort=8060
         }
-        springProfilesDefault = "dev"
     }
 }

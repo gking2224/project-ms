@@ -1,33 +1,19 @@
-package me.gking2224.projectms.dao;
+package me.gking2224.projectms.db.dao;
 
 import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import me.gking2224.common.db.jpa.AbstractDaoImpl;
-import me.gking2224.projectms.jpa.Project;
-import me.gking2224.projectms.jpa.ProjectRepository;
+import me.gking2224.common.db.AbstractDaoImpl;
+import me.gking2224.projectms.db.jpa.ProjectRepository;
+import me.gking2224.projectms.model.Project;
 
 @Component
 @Transactional
 public class ProjectDaoImpl extends AbstractDaoImpl<Project> implements ProjectDao {
 
-//    @Autowired
-//    DateTimeFormatter dateTimeFormatter;
-
-    private EntityManager entityManager;
-
-    @PersistenceUnit
-    public void setEntityManagerFactory(EntityManagerFactory emf) {
-        this.entityManager = emf.createEntityManager();
-    }
-    
     @Autowired
     protected ProjectRepository projectRepository;
     
@@ -50,7 +36,7 @@ public class ProjectDaoImpl extends AbstractDaoImpl<Project> implements ProjectD
     @Override
     public Project updateProject(Project project) {
         
-        Project existing = projectRepository.findOne(project.getId());
+//        Project existing = projectRepository.findOne(project.getId());
         Project saved = projectRepository.save(project);
         return saved;
     }
@@ -65,7 +51,7 @@ public class ProjectDaoImpl extends AbstractDaoImpl<Project> implements ProjectD
         
         Project project = projectRepository.findOne(id);
         
-        entityManager.detach(project);
+        getEntityManager().detach(project);
         return project;
     }
 }

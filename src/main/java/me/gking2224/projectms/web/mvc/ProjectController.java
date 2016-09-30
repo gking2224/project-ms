@@ -1,4 +1,4 @@
-package me.gking2224.projectms.controller;
+package me.gking2224.projectms.web.mvc;
 
 import static java.util.stream.Collectors.toList;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import me.gking2224.common.utils.JsonUtil;
-import me.gking2224.projectms.controller.ProjectController;
-import me.gking2224.projectms.jpa.Project;
+import me.gking2224.projectms.model.Project;
 import me.gking2224.projectms.service.ProjectService;
+import me.gking2224.projectms.web.mvc.ProjectController;
 
 @org.springframework.web.bind.annotation.RestController
 public class ProjectController {

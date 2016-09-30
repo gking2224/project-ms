@@ -2,7 +2,7 @@ package me.gking2224.projectms.service;
 
 import java.util.List;
 
-import me.gking2224.projectms.jpa.Project;
+import me.gking2224.projectms.model.Project;
 
 public interface ProjectService {
 

@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import me.gking2224.projectms.dao.ProjectDao;
-import me.gking2224.projectms.jpa.Project;
+import me.gking2224.projectms.db.dao.ProjectDao;
+import me.gking2224.projectms.model.Project;
 
 @Component
 @Transactional(readOnly=true)

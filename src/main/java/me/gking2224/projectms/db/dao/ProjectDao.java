@@ -1,8 +1,8 @@
-package me.gking2224.projectms.dao;
+package me.gking2224.projectms.db.dao;
 
 import java.util.List;
 
-import me.gking2224.projectms.jpa.Project;
+import me.gking2224.projectms.model.Project;
 
 public interface ProjectDao {
 
