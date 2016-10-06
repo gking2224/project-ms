@@ -43,7 +43,7 @@ public class ProjectController {
 	@Autowired
 	JsonUtil jsonUtil;
 
-    @RequestMapping(value="/", method=RequestMethod.GET)
+    @RequestMapping(value="", method=RequestMethod.GET)
     public ResponseEntity<List<Project>> getAllProjects(
     ) {
         List<Project> findAllProjects = projectService.findAllProjects();
@@ -54,7 +54,7 @@ public class ProjectController {
         return new ResponseEntity<List<Project>>(b, headers, HttpStatus.OK);
     }
 
-    @RequestMapping(value="/", method=RequestMethod.POST, consumes=APPLICATION_JSON_VALUE)
+    @RequestMapping(value="", method=RequestMethod.POST, consumes=APPLICATION_JSON_VALUE)
     public ResponseEntity<Project> newProject(
             @RequestBody Project project) {
 
