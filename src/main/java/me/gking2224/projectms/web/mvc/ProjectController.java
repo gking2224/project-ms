@@ -19,13 +19,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import me.gking2224.common.utils.JsonUtil;
 import me.gking2224.projectms.model.Project;
 import me.gking2224.projectms.service.ProjectService;
 import me.gking2224.projectms.web.mvc.ProjectController;
 
-@org.springframework.web.bind.annotation.RestController
+@RestController
+@RequestMapping("/projects")
 public class ProjectController {
 
     public static final String PROJECTS = "/projects";
@@ -41,7 +43,7 @@ public class ProjectController {
 	@Autowired
 	JsonUtil jsonUtil;
 
-    @RequestMapping(value=PROJECTS, method=RequestMethod.GET)
+    @RequestMapping(value="/", method=RequestMethod.GET)
     public ResponseEntity<List<Project>> getAllProjects(
     ) {
         List<Project> findAllProjects = projectService.findAllProjects();
@@ -52,7 +54,7 @@ public class ProjectController {
         return new ResponseEntity<List<Project>>(b, headers, HttpStatus.OK);
     }
 
-    @RequestMapping(value=PROJECTS, method=RequestMethod.POST, consumes=APPLICATION_JSON_VALUE)
+    @RequestMapping(value="/", method=RequestMethod.POST, consumes=APPLICATION_JSON_VALUE)
     public ResponseEntity<Project> newProject(
             @RequestBody Project project) {
 
@@ -64,7 +66,7 @@ public class ProjectController {
         return new ResponseEntity<Project>(b, headers, HttpStatus.OK);
     }
 
-    @RequestMapping(value=PROJECT, method=RequestMethod.PUT, consumes=APPLICATION_JSON_VALUE)
+    @RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes=APPLICATION_JSON_VALUE)
     public ResponseEntity<Project> updateProject(
             @PathVariable("id") final Long id,
             @RequestBody final Project project) {
@@ -80,7 +82,7 @@ public class ProjectController {
         return new ResponseEntity<Project>(p, headers, HttpStatus.OK);
     }
 
-    @RequestMapping(value=PROJECT, method=RequestMethod.DELETE, consumes=APPLICATION_JSON_VALUE)
+    @RequestMapping(value="/{id}", method=RequestMethod.DELETE, consumes=APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> deleteProject(
             @PathVariable("id") final Long id) {
         logger.debug(PROJECTS);
@@ -92,7 +94,7 @@ public class ProjectController {
         return new ResponseEntity<Void>(headers, HttpStatus.OK);
     }
 
-    @RequestMapping(value=PROJECT, method=RequestMethod.GET)
+    @RequestMapping(value="/{id}", method=RequestMethod.GET)
     public ResponseEntity<Project> getProject(
             @PathVariable("id") final Long id) {
         Project b = projectService.findProjectById(id);

@@ -1,4 +1,4 @@
-package me.gking2224.projectms.web.controller;
+package me.gking2224.projectms.web.mvc;
 
 import static java.lang.String.format;
 import static java.lang.String.valueOf;
@@ -19,6 +19,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -31,11 +32,11 @@ import org.springframework.web.context.WebApplicationContext;
 import me.gking2224.common.utils.JsonMvcTestHelper;
 import me.gking2224.common.utils.JsonUtil;
 import me.gking2224.projectms.model.Project;
-import me.gking2224.projectms.web.mvc.ProjectsWebAppTestConfigurer;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration()
-@ContextConfiguration(classes=ProjectsWebAppTestConfigurer.class)
+@WebAppConfiguration
+@ActiveProfiles({"embedded","web"})
+@ContextConfiguration(classes=ProjectsWebAppTestConfiguration.class)
 @Transactional
 @Rollback
 @Sql

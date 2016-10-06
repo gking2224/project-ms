@@ -16,14 +16,16 @@ import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.web.context.support.StandardServletEnvironment;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import me.gking2224.common.CommonConfiguration;
 import me.gking2224.projectms.db.DatabaseConfiguration;
+import me.gking2224.projectms.db.EmbeddedDatabaseConfiguration;
 import me.gking2224.projectms.web.WebAppConfiguration;
 
 @Configuration
-@ComponentScan(basePackages={"me.gking2224.projectms.service", "me.gking2224.projectms.model", "me.gking2224.common"})
+@ComponentScan(basePackages={"me.gking2224.projectms.service", "me.gking2224.projectms.model"})
 @EnableAutoConfiguration
 @EnableWebMvc
-@Import({WebAppConfiguration.class, DatabaseConfiguration.class})
+@Import({WebAppConfiguration.class, DatabaseConfiguration.class, EmbeddedDatabaseConfiguration.class, CommonConfiguration.class})
 public class ProjectMicroServiceApplication extends SpringBootServletInitializer{
     
     @Override

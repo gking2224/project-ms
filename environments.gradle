@@ -1,4 +1,4 @@
-if (!project.hasProperty("env")) project.ext.env="local"
+if (!project.hasProperty("env")) project.ext.env="embedded"
 environments {
     env("all") {
         database {
@@ -12,8 +12,8 @@ environments {
                 password = "${project.rootDatabasePassword}"
             }
             hibernate {
-                showSql = "true"
-                formatSql = "true"
+                showSql = "false"
+                formatSql = "false"
                 generateStatistics = "false"
                 hbm2ddlAuto = "validate"
                 dialect = "org.hibernate.dialect.MySQLInnoDBDialect"
@@ -53,7 +53,30 @@ environments {
             httpPort=8000
         }
     }
-    env( "dev") {
+    env("embedded") {
+        database {
+            port = 8002
+            name = "${project.localDatabaseName}"
+            host = "${project.localDatabaseHost}"
+            password = "${project.localDatabasePassword}"
+            username = "${project.localDatabaseUsername}"
+            hibernate {
+                showSql = "false"
+                formatSql = "false"
+                hbm2ddlAuto = "validate"
+            }
+            connectionPoolSize = 2
+        }
+        webapp {
+            contextPath="/projects-local"
+            host="localhost"
+            ng {
+                buildDir = "dist-local"
+            }
+            httpPort=8000
+        }
+    }
+    env("dev") {
         database {
             name = "${project.devDatabaseName}"
             host = "${project.devDatabaseHost}"
