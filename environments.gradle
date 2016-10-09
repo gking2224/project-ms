@@ -32,24 +32,15 @@ environments {
     }
     env("local") {
         database {
-            port = 8002
             name = "${project.localDatabaseName}"
             host = "${project.localDatabaseHost}"
             password = "${project.localDatabasePassword}"
             username = "${project.localDatabaseUsername}"
-            hibernate {
-                showSql = "false"
-                formatSql = "false"
-                hbm2ddlAuto = "validate"
-            }
             connectionPoolSize = 2
         }
         webapp {
             contextPath="/projects-local"
             host="localhost"
-            ng {
-                buildDir = "dist-local"
-            }
             httpPort=8000
         }
     }
