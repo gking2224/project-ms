@@ -21,10 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import me.gking2224.common.utils.JsonUtil;
 import me.gking2224.projectms.model.Project;
 import me.gking2224.projectms.service.ProjectService;
-import me.gking2224.projectms.web.mvc.ProjectController;
 
 @RestController
 @RequestMapping("/projects")
@@ -39,9 +37,6 @@ public class ProjectController {
 	ProjectService projectService;
 	
 	@Autowired  @Qualifier("longDateTimeFormat") DateTimeFormatter dateTimeFormatter;
-
-	@Autowired
-	JsonUtil jsonUtil;
 
     @RequestMapping(value="", method=RequestMethod.GET)
     public ResponseEntity<List<Project>> getAllProjects(
