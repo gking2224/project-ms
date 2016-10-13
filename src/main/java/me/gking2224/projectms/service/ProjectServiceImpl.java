@@ -1,17 +1,17 @@
 package me.gking2224.projectms.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import me.gking2224.common.db.dao.CrudDao;
+import me.gking2224.common.service.AbstractCrudServiceImpl;
 import me.gking2224.projectms.db.dao.ProjectDao;
 import me.gking2224.projectms.model.Project;
 
 @Component
 @Transactional(readOnly=true)
-public class ProjectServiceImpl implements ProjectService {
+public class ProjectServiceImpl extends AbstractCrudServiceImpl<Project, Long>implements ProjectService {
 
 
     @Autowired
@@ -21,31 +21,8 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    @Transactional(readOnly=false)
-    public Project createProject(Project project) {
-        return dao.createProject(project);
-    }
-
-    @Override
-    public List<Project> findAllProjects() {
-        return dao.findAllProjects();
-    }
-
-    @Override
-    @Transactional(readOnly=false)
-    public Project updateProject(Project project) {
-        return dao.updateProject(project);
-    }
-
-    @Override
-    @Transactional(readOnly=false)
-    public void deleteProject(Long id) {
-        dao.deleteProject(id);
-    }
-
-    @Override
-    public Project findProjectById(Long id) {
-        return dao.findProjectById(id);
+    protected CrudDao<Project, Long> getDao() {
+        return dao;
     }
 
 }

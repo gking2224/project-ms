@@ -34,21 +34,6 @@ jar {
 
 apply plugin: 'spring-boot'
 
-springBoot {
-    executable = true
-}
-bootRun {
-    jvmArgs "-Xdebug"
-    jvmArgs "-Xrunjdwp:server=y,transport=dt_socket,address=8001,suspend=y"
-    jvmArgs "-Dorg.jboss.logging.provider=slf4j"
-    args = ["--spring.profiles.active=web"]
-}
-bootRepackage {
-    mainClass = 'me.gking2224.projectms.ProjectMicroServiceApplication'
-}
-
-
-//apply from: 'artifactory.gradle'
 apply from: 'database.gradle'
 apply from: 'environments.gradle'
 apply from: 'webapp.gradle'
@@ -58,11 +43,27 @@ apply plugin: 'me.gking2224.awsplugin'
 apply plugin: 'me.gking2224.databasebuild'
 apply plugin: 'me.gking2224.webappbuild'
 
+apply plugin: 'spring-boot'
+springBoot {
+    executable = true
+}
+bootRun {
+    jvmArgs "-Xdebug"
+    jvmArgs "-Xrunjdwp:server=y,transport=dt_socket,suspend=n,address="+project.envProps.jdwpPort
+    jvmArgs "-Dorg.jboss.logging.provider=slf4j"
+    args = ["--spring.profiles.active=web,"+project.env, "--debug"]
+}
+bootRepackage {
+    mainClass = 'me.gking2224.projectms.ProjectMicroServiceApplication'
+    classifier = "boot"
+    withJarTask = jar
+}
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 ext {
       springVersion = "4.3.1.RELEASE"
+      springSecurityVersion = "4.1.3.RELEASE"
       springDataVersion = "1.10.2.RELEASE"
       springBootVersion = "1.4.1.RELEASE"
       jacksonVersion = "2.8.0"
@@ -95,10 +96,10 @@ dependencies {
     runtime "org.slf4j:jcl-over-slf4j:$slf4jVersion"
     runtime "org.slf4j:jul-to-slf4j:$slf4jVersion"
     
+    
     // SPRING BOOT
     compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
     compile("org.springframework.boot:spring-boot:$springBootVersion")
-    
     
     
     // SPRING FRAMEWORK
@@ -108,7 +109,6 @@ dependencies {
     compile("org.springframework:spring-webmvc:$springVersion")
     compile("org.springframework:spring-context-support:$springVersion")
     
-
     
     // MVC
     compile("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
@@ -118,7 +118,6 @@ dependencies {
     compile group: 'com.jayway.jsonpath', name: 'json-path', version: '2.2.0'
     
     
-
     // DATABASE
     compile("org.springframework:spring-jdbc:$springVersion")
     compile "org.springframework:spring-orm:$springVersion"
@@ -131,6 +130,14 @@ dependencies {
     // UTILS
     compile group: 'org.aspectj', name: 'aspectjtools', version: '1.6.2'
     compile("me.gking2224:gk-microservice-utils:0.0.1-SNAPSHOT")
+    
+    
+    // SECURITY
+    compile group:'me.gking2224', name:'securityms-client', classifier:'client', version:'0.0.1-SNAPSHOT'
+        // (why aren't these next two included as transitive dependencies of the above?)
+        compile("org.springframework.security:spring-security-core:$springSecurityVersion")
+        compile("org.springframework.security:spring-security-web:$springSecurityVersion")
+    compile("org.springframework.security:spring-security-config:$springSecurityVersion")
     
     
     // TESTING
@@ -154,57 +161,7 @@ configurations.compile {
     exclude group: "log4j", module: "log4j"
     exclude group: "commons-logging", module:"commons-logging"
 }
-/*
-applicationDefaultJvmArgs = [
-    "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005"
-]
-*/
 
 configurations {
   published
 }
-
-awsplugin {
-    region = "eu-west-1"
-}
-
-//task createWebServer(type:CreateInstanceTask) {
-//    imageId = {webServerAmi}
-//    instanceType = "t2.micro"
-//    securityGroup = "restricted"
-//    postInitWaitTime = 60
-//}
-
-//createWebServer << {
-//    project.envProps.webapp.host = publicIpAddress
-//}
-//
-//task deployWar(type:RemoteExec, dependsOn:[war]) {
-//    host = {project.envProps.webapp.host}
-//    keyFileDir = "/Users/gk"
-//    keyFileName = ".awskey"
-//    remoteUser = {project.remoteUser}
-//    timeout = 120
-//    ext.warFileName = {configurations.archives.artifacts.find{it.type=="war"}.file.name}
-//    ext.remoteDir = {"/home/$remoteUser/buildfiles/$runId"}
-//    exec {
-//        cmd = {"mkdir -p $remoteDir"}
-//    }
-//    scp {
-//        fromDir = "$scriptsDir/webapp"
-//        file = "deployWar.sh"
-//        to = {"$remoteDir"}
-//    }
-//    scp {
-//        fromDir = {configurations.archives.artifacts.find{it.type=="war"}.file.parentFile}
-//        file = {warFileName}
-//        to = {"$remoteDir"}
-//        template = false
-//    }
-//    exec {
-//        sudo = true
-//        cmds = [{"chmod 750 $remoteDir/deployWar.sh"}, {"$remoteDir/deployWar.sh"}]
-//    }
-//}
-//task deployWarToNewWebServer(dependsOn:[createWebServer,deployWar])
-//deployWar.mustRunAfter(createWebServer)

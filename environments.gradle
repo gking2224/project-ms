@@ -22,104 +22,72 @@ environments {
             connectionPoolSize = 2
         }
         webapp {
-            contextPath="/projects"
-            httpPort=8000
-            ng {
-                buildDir = "dist"
-                port = 3000
-                deleteIndexHtml=false
-            }
+            contextPath="${project.contextPath}"
+            host="localhost"
+            httpPort=project.basePort
         }
+        security {
+            host= "${project.securityServiceHost}"
+            port= "${project.securityServicePort}"
+            context= "${project.securityServiceContext}"
+        }
+        jdwpPort = Integer.parseInt(project.basePort)+1
     }
     env("local") {
         database {
-            name = "${project.localDatabaseName}"
+            name = "${project.databaseBaseName}_lcl"
             host = "${project.localDatabaseHost}"
             password = "${project.localDatabasePassword}"
             username = "${project.localDatabaseUsername}"
-            connectionPoolSize = 2
         }
         webapp {
-            contextPath="/projects-local"
-            host="localhost"
-            httpPort=8000
+            httpPort=project.basePort
         }
     }
     env("embedded") {
         database {
-            port = 8002
-            name = "${project.localDatabaseName}"
+            port=Integer.parseInt(project.basePort)+2
+            name = "${project.databaseBaseName}_ebd"
             host = "${project.localDatabaseHost}"
             password = "${project.localDatabasePassword}"
             username = "${project.localDatabaseUsername}"
-            hibernate {
-                showSql = "false"
-                formatSql = "false"
-                hbm2ddlAuto = "validate"
-            }
-            connectionPoolSize = 2
         }
         webapp {
-            contextPath="/projects-local"
-            host="localhost"
-            ng {
-                buildDir = "dist-local"
-            }
-            httpPort=8000
+            httpPort=project.basePort
         }
     }
     env("dev") {
         database {
-            name = "${project.devDatabaseName}"
+            name = "${project.databaseBaseName}_dev"
             host = "${project.devDatabaseHost}"
             password = "${project.devDatabasePassword}"
             username = "${project.devDatabaseUsername}"
         }
         webapp {
-            contextPath="/projects-dev"
-            ng {
-                buildDir = "dist-dev"
-            }
-            httpPort=8020
+            httpPort=Integer.parseInt(project.basePort)+20
         }
     }
     env("test") {
         database {
-            name = "${project.testDatabaseName}"
+            name = "${project.databaseBaseName}_tst"
             host = "${project.testDatabaseHost}"
             password = "${project.testDatabasePassword}"
             username = "${project.testDatabaseUsername}"
         }
         webapp {
-            contextPath="/projects-test"
-            host="localhost"
-            ng {
-                buildDir = "dist-test"
-            }
-            httpPort=8040
+            httpPort=Integer.parseInt(project.basePort)+40
         }
     }
     env("prod") {
         database {
-            name = "${project.prodDatabaseName}"
+            name = "${project.databaseBaseName}_prd"
             host = "${project.prodDatabaseHost}"
             password = "${project.prodDatabasePassword}"
             username = "${project.prodDatabaseUsername}"
-            hibernate {
-                showSql = "false"
-                formatSql = "false"
-            }
             connectionPoolSize = 10
         }
         webapp {
-            contextPath="/projects-prod"
-            host="${project.prodWebserverHost}"
-            ng {
-                buildDir = "dist-prod"
-                port = 3000
-                deleteIndexHtml=true
-            }
-            httpPort=8060
+            httpPort=Integer.parseInt(project.basePort)+60
         }
     }
 }

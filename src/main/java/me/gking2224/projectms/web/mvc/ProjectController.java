@@ -41,7 +41,7 @@ public class ProjectController {
     @RequestMapping(value="", method=RequestMethod.GET)
     public ResponseEntity<List<Project>> getAllProjects(
     ) {
-        List<Project> findAllProjects = projectService.findAllProjects();
+        List<Project> findAllProjects = projectService.findAll();
         List<Project> b = findAllProjects.stream().map(this::enrichProject).collect(toList());
 
         HttpHeaders headers = new HttpHeaders();
@@ -53,7 +53,7 @@ public class ProjectController {
     public ResponseEntity<Project> newProject(
             @RequestBody Project project) {
 
-        Project b = projectService.createProject(project);
+        Project b = projectService.save(project);
         b = enrichProject(b);
 
         HttpHeaders headers = new HttpHeaders();
@@ -69,7 +69,7 @@ public class ProjectController {
         if (typeId == null) project.setId(id);
         else if (typeId != id)
             throw new IllegalArgumentException("Illegal attempt to change immutable field (id)");
-        Project p = projectService.updateProject(project);
+        Project p = projectService.update(project);
         p = enrichProject(p);
 
         HttpHeaders headers = new HttpHeaders();
@@ -82,7 +82,7 @@ public class ProjectController {
             @PathVariable("id") final Long id) {
         logger.debug(PROJECTS);
 
-        projectService.deleteProject(id);
+        projectService.delete(id);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -92,7 +92,7 @@ public class ProjectController {
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
     public ResponseEntity<Project> getProject(
             @PathVariable("id") final Long id) {
-        Project b = projectService.findProjectById(id);
+        Project b = projectService.findById(id);
         b = enrichProject(b);
 
         HttpHeaders headers = new HttpHeaders();

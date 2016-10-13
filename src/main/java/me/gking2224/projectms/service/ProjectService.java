@@ -1,19 +1,8 @@
 package me.gking2224.projectms.service;
 
-import java.util.List;
-
+import me.gking2224.common.service.CrudService;
 import me.gking2224.projectms.model.Project;
 
-public interface ProjectService {
-
-    Project createProject(Project project);
-
-    List<Project> findAllProjects();
-
-    Project updateProject(Project project);
-
-    void deleteProject(Long id);
-
-    Project findProjectById(Long id);
+public interface ProjectService extends CrudService<Project, Long> {
 
 }
