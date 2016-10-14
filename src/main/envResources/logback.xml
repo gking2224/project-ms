@@ -40,7 +40,7 @@
     <IncludeCallerData>true</IncludeCallerData>
   </appender>
   
-  
+  <logger name="me.gking2224.common.aop.TraceAspect" level="TRACE"/>
   <logger name="me.gking2224" level="DEBUG"/>
   <logger name="me.gking2224.common.db.embedded.EmbeddedMySQLDatabase" level="WARN"/>
   <logger name="me.gking2224.common.utils.NestedProperties" level="WARN"/>
@@ -52,6 +52,7 @@
   <logger name="org.springframework" level="INFO"/>
   
   <root level="WARN">
+    <!--<appender-ref ref="console"/>-->
     <appender-ref ref="file"/>
     <!-- <appender-ref ref="socket"/> -->
   </root>

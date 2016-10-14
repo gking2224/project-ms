@@ -25,7 +25,9 @@ public class SecurityConfiguration {
                     .antMatchers(HttpMethod.PUT, "/projects/**")
                         .hasAnyAuthority("Permission:EditProject")
                     .antMatchers(HttpMethod.GET, "/projects/**")
-                        .hasAnyAuthority("Permission:ViewProjectDetail");
+                        .hasAnyAuthority("Permission:ViewProjectDetail")
+                    .antMatchers(HttpMethod.DELETE, "/projects/**")
+                        .hasAnyAuthority("Permission:DeleteProject");
             }
         };
     }
