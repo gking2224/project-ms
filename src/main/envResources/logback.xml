@@ -22,13 +22,13 @@
     <!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender-->
     <!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy-->
     <!--for further documentation-->
-    <File>/logs/projectms.log</File>
+    <File>/logs/${project.name}.log</File>
     <Append>true</Append>
     <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
       <pattern>%d [%t] %-5p %c- %m%n</pattern>
     </encoder>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>/logs/projectms.%d{yyyy-MM-dd}.log</fileNamePattern>
+      <fileNamePattern>/logs/${project.name}.%d{yyyy-MM-dd}.log</fileNamePattern>
     </rollingPolicy>
   </appender>
   
@@ -53,6 +53,6 @@
   
   <root level="WARN">
     <appender-ref ref="file"/>
-    <appender-ref ref="socket"/>
+    <!-- <appender-ref ref="socket"/> -->
   </root>
 </configuration>

@@ -10,17 +10,23 @@ import me.gking2224.securityms.client.HttpSecurityConfigurer;
 
 @Import(CommonSecurityConfiguration.class)
 public class SecurityConfiguration {
-    
+
     @Bean
     HttpSecurityConfigurer httpSecurityConfigurer() {
         return new HttpSecurityConfigurer() {
 
             @Override
             public void configure(final HttpSecurity http) throws Exception {
-                http.authorizeRequests().antMatchers(HttpMethod.GET, "/things/secure").hasRole("SUPER_USER");
-                
+                http.authorizeRequests()
+                    .antMatchers(HttpMethod.GET, "/projects")
+                        .hasAnyAuthority("Permission:ViewProjectSummary", "Permission:ViewProjectDetail")
+                    .antMatchers(HttpMethod.POST, "/projects")
+                        .hasAnyAuthority("Permission:CreateProject")
+                    .antMatchers(HttpMethod.PUT, "/projects/**")
+                        .hasAnyAuthority("Permission:EditProject")
+                    .antMatchers(HttpMethod.GET, "/projects/**")
+                        .hasAnyAuthority("Permission:ViewProjectDetail");
             }
-            
         };
     }
 

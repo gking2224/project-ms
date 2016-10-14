@@ -30,12 +30,13 @@ environments {
             host= "${project.securityServiceHost}"
             port= "${project.securityServicePort}"
             context= "${project.securityServiceContext}"
+            realmName= "${project.realmName}"
         }
         jdwpPort = Integer.parseInt(project.basePort)+1
     }
     env("local") {
         database {
-            name = "${project.databaseBaseName}_lcl"
+            name = "${project.databaseBaseName}_local"
             host = "${project.localDatabaseHost}"
             password = "${project.localDatabasePassword}"
             username = "${project.localDatabaseUsername}"
