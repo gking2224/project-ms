@@ -31,6 +31,7 @@ environments {
             port= "${project.securityServicePort}"
             context= "${project.securityServiceContext}"
             realmName= "${project.realmName}"
+            allowedCorsOrigins="${project.allowedCorsOrigins}"
         }
         jdwpPort = Integer.parseInt(project.basePort)+1
     }

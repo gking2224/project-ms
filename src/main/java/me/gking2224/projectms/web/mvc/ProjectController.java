@@ -69,7 +69,7 @@ public class ProjectController {
         if (typeId == null) project.setId(id);
         else if (typeId != id)
             throw new IllegalArgumentException("Illegal attempt to change immutable field (id)");
-        Project p = projectService.update(project);
+        Project p = projectService.save(project);
         p = enrichProject(p);
 
         HttpHeaders headers = new HttpHeaders();
