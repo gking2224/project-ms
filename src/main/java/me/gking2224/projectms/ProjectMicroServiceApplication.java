@@ -18,6 +18,7 @@ import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.web.context.support.StandardServletEnvironment;
 
 import me.gking2224.common.CommonConfiguration;
+import me.gking2224.common.jms.CommonMessagingConfiguration;
 import me.gking2224.projectms.db.DatabaseConfiguration;
 import me.gking2224.projectms.db.EmbeddedDatabaseConfiguration;
 import me.gking2224.projectms.security.SecurityConfiguration;
@@ -25,7 +26,14 @@ import me.gking2224.projectms.web.WebAppConfiguration;
 
 @Configuration
 @ComponentScan(basePackages={"me.gking2224.projectms.service", "me.gking2224.projectms.model"})
-@Import({WebAppConfiguration.class, DatabaseConfiguration.class, EmbeddedDatabaseConfiguration.class, CommonConfiguration.class, SecurityConfiguration.class})
+@Import({
+    WebAppConfiguration.class,
+    DatabaseConfiguration.class,
+    EmbeddedDatabaseConfiguration.class,
+    CommonConfiguration.class,
+    SecurityConfiguration.class,
+    CommonMessagingConfiguration.class
+})
 public class ProjectMicroServiceApplication extends SpringBootServletInitializer{
 
     private ServletContext servletContext;
