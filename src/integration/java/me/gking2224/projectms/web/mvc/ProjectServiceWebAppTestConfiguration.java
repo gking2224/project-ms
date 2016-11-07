@@ -12,5 +12,5 @@ import me.gking2224.projectms.web.WebAppConfiguration;
 
 @ComponentScan({"me.gking2224.projectms.model", "me.gking2224.projectms.service"})
 @Import({WebAppConfiguration.class, DatabaseConfiguration.class, EmbeddedDatabaseConfiguration.class, CommonTestConfiguration.class})
-public class ProjectsWebAppTestConfiguration extends WebAppTestConfigurer {
+public class ProjectServiceWebAppTestConfiguration extends WebAppTestConfigurer {
 }

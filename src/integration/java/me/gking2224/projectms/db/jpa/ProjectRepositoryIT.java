@@ -7,18 +7,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import me.gking2224.projectms.ProjectServiceTestInitializer;
 import me.gking2224.projectms.ProjectTestConfiguration;
 import me.gking2224.projectms.model.Project;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ActiveProfiles({"embedded"})
-@ContextConfiguration(classes=ProjectTestConfiguration.class)
+@ContextConfiguration(name="projectms", classes=ProjectTestConfiguration.class, initializers={ProjectServiceTestInitializer.class})
 @Transactional
 @Rollback
 public class ProjectRepositoryIT {
