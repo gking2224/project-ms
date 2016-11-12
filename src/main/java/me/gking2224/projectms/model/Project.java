@@ -12,9 +12,11 @@ import org.hibernate.annotations.GenericGenerator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import me.gking2224.common.model.NullAbstractEntity;
+
 @Entity
 @Table (name="PROJECT")
-public class Project implements java.io.Serializable {
+public class Project extends NullAbstractEntity<Long> implements java.io.Serializable {
 
     /**
      * 
